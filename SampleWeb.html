@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.js"></script>
+        <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.js"></script>
+        <title>Project: Recipe book</title>
+        <meta charset="utf-8">
+        <style>
+        </style>
+    </head>
+    <body >
+        <h1>My Recipes</h1>
+        <h2>There are no recipes to list</h2>
+		<div>
+			<table id="recplist" align="left" style='display:none'>
+				<thead>
+					<tr id="titleRow" >
+					  <th>recipe-name</th>
+					  <th>recipe-instructions</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+			 <p style="page-break-after: always;">&nbsp;</p>
+		<div>
+			<button type="button" id=AddRecipe onclick='disableButton()'>Add Recipe</button>
+			<form id = "AddRecipForm" style='display:none'>
+			  <label for="fname">recipe-name:</label><br>
+			  <input type="text" id="recipe-name" name="fname"><br>
+			  <label for="lname">recipe-instructions:</label><br>
+			  <input type="text" id="recipe-instructions" name="lname">
+			  <button type="button" id=Submit1 onclick="Submit()">Submit</button>
+			</form>
+		<script>
+   var recpArray = [];
+   window.onload = init;
+    function init(){
+        var recp= {
+					
+				  };
+		recpArray = JSON.parse(localStorage.getItem("recp")) || [];
+    }		
+    function disableButton() {
+       // var btn = document.getElementById('AddRecipe');
+        var form = document.getElementById("AddRecipForm");
+       var elements = form.elements;
+       document.getElementById("AddRecipForm").style = "block";
+      for (var i = 0, len = elements.length; i < len; ++i) {
+            elements[i].disabled = false;
+      }
+      document.getElementById("AddRecipe").disabled = true;
+    }
+    function Submit() {
+        var btn = document.getElementById("Submit1");
+        btn.disabled = true;
+        document.getElementById("recplist").style = "block";
+		
+		let recipename = document.getElementById("recipe-name").value;
+		let recipeinstructions = document.getElementById("recipe-instructions").value;
+		console.log(recipename);
+		console.log(recipeinstructions);
+		
+		  var table = document.getElementById("recplist").getElementsByTagName('tbody')[0];
+		  var row = table.insertRow(0);
+		  var cell1 = row.insertCell(0);
+		  var cell2 = row.insertCell(1);
+		  cell1.innerHTML = recipename;
+		  cell2.innerHTML = recipeinstructions;
+    }
+    function init() {
+       // var btn = document.getElementById('AddRecipe');
+        document.getElementById("AddRecipForm").style.display="none";
+    }
+    function enableFrm(){
+       var form = document.getElementById("AddRecipForm");
+       var elements = form.elements;
+      for (var i = 0, len = elements.length; i < len; ++i) {
+       elements[i].enabled = true;
+      }
+		}
+</script>
+	  </div>
+</html>
